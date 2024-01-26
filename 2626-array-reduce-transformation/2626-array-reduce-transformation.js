@@ -5,5 +5,13 @@
  * @return {number}
  */
 var reduce = function(nums, fn, init) {
-  return nums.reduce(fn,init);  
+  //for each loop
+    
+    let res=init;
+    
+    for(const n of nums){
+        res=fn(res,n);
+    }
+    return res;
+    return nums.reduce(fn,init);  
 };
