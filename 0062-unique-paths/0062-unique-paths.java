@@ -5,7 +5,7 @@ class Solution {
         // when only moving right.
         Arrays.fill(pathCounts, 1);
            // Loop over each cell starting from the second row up to the top row (since the bottom row is already filled).
-        for (int row = 1; row < m; ++row) {
+        for (int row =1 ; row < m; ++row) {
             // For each cell in a row, start from the second column since the first column of any row
             // will only have one unique path (i.e., moving down from the cell above).
             for (int col = 1; col < n; ++col) {
@@ -15,8 +15,11 @@ class Solution {
             }
         }
       
-        // Return the number of unique paths to the top-right corner of the grid.
-        return pathCounts[n - 1];
+        // Return the number of unique paths to the  bottom-right corner of the grid.
+        return pathCounts[n -1];
         
     }
 }
+
+//TC-O(m*n)
+//SC-O(n)
