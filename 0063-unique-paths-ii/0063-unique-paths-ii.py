@@ -5,7 +5,11 @@ class Solution:
         dp = [[0] * n for _ in range(m)]
 
         # Initialize the starting cell
-        dp[0][0] = 1 if obstacleGrid[0][0] == 0 else 0
+        if obstacleGrid[0][0] == 0:
+            dp[0][0]=1
+        else:
+            dp[0][0]=0
+            
 
         # Update the first column
         for i in range(1, m):
