@@ -3,32 +3,42 @@ class Solution {
         int m=s.length();
         int n=t.length();
         
-        int [][]dp=new int[n+1][m+1];
-          for (int rows[] : dp)
-            Arrays.fill(rows, -1);
-
+       
         
-        return countSubseq(s,t,m-1,n-1,dp);
+        return countSubseq(s,t,n,m);
+        
     }
-    public int countSubseq(String s1,String s2,int ind1,int ind2,int [][]dp){
-        //baase case
+    public int countSubseq(String s1,String s2,int n,int m){
+       int dp[][] = new int[m + 1][n + 1];
         
-        if(ind2<0)
-            return 1;//we have match all the charaters of s2 with s1..
-        else if(ind1<0)
-            return 0;//we have check all characters of S1 but not able to match S1..
-        if(dp[ind2][ind1]!=-1)
-            return dp[ind2][ind1];
-        
-        else if(s1.charAt(ind1)==s2.charAt(ind2))
-            dp[ind2][ind1]= countSubseq(s1,s2,ind1-1,ind2-1,dp) + countSubseq(s1,s2,ind1-1,ind2,dp);
-        else 
-            dp[ind2][ind1]= countSubseq(s1,s2,ind1-1,ind2,dp);
-        
-        return dp[ind2][ind1];
-        
+        // Initialize the first column to 1 because an empty string s2 is a subsequence of any string s1
+        for (int i = 0; i <= m; i++) {
+            dp[i][0] = 1;
+        }
+
+        // Initialize the first row (except dp[0][0]) to 0 because there's no way to form s1 from an empty string s2.
+        for (int i = 1; i <= n; i++) {
+            dp[0][i] = 0;
+        }
+
+        // Fill the dp array using a bottom-up approach
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    // If the characters match, we can either include this character in the subsequence
+                    // or exclude it. So, we add the counts from both possibilities.
+                    dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+                } else {
+                    // If the characters don't match, we can only exclude this character.
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+
+        return dp[m][n];
     }
 }
 
-//TC- O(2^n)
-//SC-O(2^n)
+//Memoized version..
+//TC- O(m*n)
+//SC-O(n*m)+O(n+m) //recursion stack space of n+m and array size n*m;
